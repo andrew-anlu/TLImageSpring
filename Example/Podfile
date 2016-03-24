@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-use_frameworks!
+#use_frameworks!
 
 target 'TLImageSpring_Example', :exclusive => true do
   pod 'TLImageSpring', :path => '../'
@@ -10,6 +10,6 @@ target 'TLImageSpring_Tests', :exclusive => true do
 
   pod 'Specta'
   pod 'Expecta'
-  pod 'FBSnapshotTestCase'
+  # pod 'FBSnapshotTestCase'
   pod 'Expecta+Snapshots'
 end

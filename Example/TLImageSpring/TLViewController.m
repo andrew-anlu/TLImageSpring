@@ -7,6 +7,7 @@
 //
 
 #import "TLViewController.h"
+#import <TLImageSpring/TLImageSpringDownloader.h>
 
 @interface TLViewController ()
 
@@ -17,13 +18,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    TLImageSpringDownloader *downloader=[[TLImageSpringDownloader alloc]init];
+    [downloader startDownload];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 @end

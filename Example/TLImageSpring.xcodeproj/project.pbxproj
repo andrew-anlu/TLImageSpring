@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F1D228B8B65796359B57217 /* Pods_TLImageSpring_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD57DA1F33B21861BAD5E27 /* Pods_TLImageSpring_Example.framework */; };
+		49C26BD01CA3DF690038FA26 /* libTLImageSpring.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -21,8 +21,9 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		6928B886BB90B2C7075F3F5D /* Pods_TLImageSpring_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0AE1452996BCF08193E70F /* Pods_TLImageSpring_Tests.framework */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		BA8F82E1F2F554305A516D84 /* libPods-TLImageSpring_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2151BB3C8397E6782467F44D /* libPods-TLImageSpring_Example.a */; };
+		D0F11B2EE9DEAD655473A4AB /* libPods-TLImageSpring_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CBB733C7031DB30CF83540 /* libPods-TLImageSpring_Tests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2151BB3C8397E6782467F44D /* libPods-TLImageSpring_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TLImageSpring_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CDF4BD503EB09883D99C99 /* Pods-TLImageSpring_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Example/Pods-TLImageSpring_Example.release.xcconfig"; sourceTree = "<group>"; };
-		3C0AE1452996BCF08193E70F /* Pods_TLImageSpring_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLImageSpring_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49C26BCD1CA3DEAB0038FA26 /* TLImageSpring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TLImageSpring.framework; path = "Pods/../build/Debug-iphoneos/TLImageSpring.framework"; sourceTree = "<group>"; };
+		49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTLImageSpring.a; path = "Pods/../build/Debug-iphoneos/libTLImageSpring.a"; sourceTree = "<group>"; };
 		55E855ABE3AFEF92350C7EFC /* Pods-TLImageSpring_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Example/Pods-TLImageSpring_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* TLImageSpring_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLImageSpring_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,12 +61,12 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		7DD57DA1F33B21861BAD5E27 /* Pods_TLImageSpring_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLImageSpring_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8DF920B90543CCFD07276D1B /* TLImageSpring.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = TLImageSpring.podspec; path = ../TLImageSpring.podspec; sourceTree = "<group>"; };
 		D90DA26FC061702E530CF45B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		DBCB3BA9B67095A8AFD00DC3 /* Pods-TLImageSpring_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Tests/Pods-TLImageSpring_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E1173B8F5570339C975D9FF5 /* Pods-TLImageSpring_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Tests/Pods-TLImageSpring_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F1CBB733C7031DB30CF83540 /* libPods-TLImageSpring_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TLImageSpring_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5DEB459C88922C70D514F14 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,10 +75,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49C26BD01CA3DF690038FA26 /* libTLImageSpring.a in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				5F1D228B8B65796359B57217 /* Pods_TLImageSpring_Example.framework in Frameworks */,
+				BA8F82E1F2F554305A516D84 /* libPods-TLImageSpring_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +90,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				6928B886BB90B2C7075F3F5D /* Pods_TLImageSpring_Tests.framework in Frameworks */,
+				D0F11B2EE9DEAD655473A4AB /* libPods-TLImageSpring_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,12 +121,14 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */,
+				49C26BCD1CA3DEAB0038FA26 /* TLImageSpring.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				7DD57DA1F33B21861BAD5E27 /* Pods_TLImageSpring_Example.framework */,
-				3C0AE1452996BCF08193E70F /* Pods_TLImageSpring_Tests.framework */,
+				2151BB3C8397E6782467F44D /* libPods-TLImageSpring_Example.a */,
+				F1CBB733C7031DB30CF83540 /* libPods-TLImageSpring_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -247,6 +253,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Andrew;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = DA9X37GALQ;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -513,12 +522,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TLImageSpring/TLImageSpring-Prefix.pch";
 				INFOPLIST_FILE = "TLImageSpring/TLImageSpring-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongli.TLImageSpring-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -529,12 +549,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TLImageSpring/TLImageSpring-Prefix.pch";
 				INFOPLIST_FILE = "TLImageSpring/TLImageSpring-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tongli.TLImageSpring-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
