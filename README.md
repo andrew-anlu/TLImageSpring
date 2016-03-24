@@ -1,4 +1,5 @@
 # TLImageSpring
+<<<<<<< HEAD
 
 [![CI Status](http://img.shields.io/travis/Andrew/TLImageSpring.svg?style=flat)](https://travis-ci.org/Andrew/TLImageSpring)
 [![Version](https://img.shields.io/cocoapods/v/TLImageSpring.svg?style=flat)](http://cocoapods.org/pods/TLImageSpring)
@@ -27,3 +28,6 @@ Andrew, anluanlu123@163.com
 ## License
 
 TLImageSpring is available under the MIT license. See the LICENSE file for more info.
+=======
+方便的从服务器端下载图片到本地，支持缓存等功能，API简单易用
+>>>>>>> 7eca377e21c20e52dd3eb0d935c2f538e7f7d491
