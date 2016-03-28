@@ -26,6 +26,19 @@
 
 
 @implementation TLImageSpringDownloader
+/**
+ *  启动状态条上的转子
+ */
+-(void)startIndicator{
+   SDNetworkActivityIndicator *networkActivity=[SDNetworkActivityIndicator sharedActivityIndicator];
+    [networkActivity startActivity];
+}
+
+-(void)stopIndicator{
+    SDNetworkActivityIndicator *networkActivity=[SDNetworkActivityIndicator sharedActivityIndicator];
+    [networkActivity stopActivity];
+
+}
 
 +(TLImageSpringDownloader*)sharedInstance{
     static dispatch_once_t once;
@@ -64,8 +77,11 @@
 }
 
 -(void)downloadImgWithURL:(NSURL *)url
-               progress:(TLImageSpringProgroessBlock)processBlock
-             isFinished:(TLImageSpringDownloadFinishBlock)finishedBlock{
+          downloadOptions:(TLImageSpringDownloadOptions)options
+                 progress:(TLImageSpringProgroessBlock)processBlock
+                finished:(TLImageSpringDownloadFinishBlock)finishedBlock
+          {
+    
     __weak typeof (self)weakSelf=self;
     
     __block TLImageSpringDownloaderUtils *operation;
@@ -78,16 +94,22 @@
      
         //创建request请求
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:timeInterval];
+        request.HTTPShouldHandleCookies=(options&TLImageSpringDownloadHandleCookies);
+        
+        request.HTTPShouldUsePipelining=YES;
+        request.allHTTPHeaderFields=weakSelf.HttpHeaders;
         
         //创建一个NSOperation,启动一个异步线程进行下载
         operation=[[TLImageSpringDownloaderUtils alloc]initWithRequest:request process:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
+            processBlock(receivedSize,expectedSize);
         } finished:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            
+            finishedBlock(image,data,error,finished);
+            //[self stopIndicator];
         } tlImageBlock:^{
             
         }];
         
+        operation.queuePriority = NSOperationQueuePriorityLow;
         [weakSelf.downloadQueue addOperation:operation];
         
     }];
@@ -108,10 +130,14 @@
           callBackBlock:(TLImageBlock)callback{
     
     if(!url){
+        if(finishedBlock){
+            finishedBlock(nil,nil,nil,NO);
+        }
         return;
     }
     
     dispatch_barrier_sync(self.responseQueue, ^{
+        
         callback();
     });
 

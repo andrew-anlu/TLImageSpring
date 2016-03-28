@@ -31,7 +31,12 @@ typedef NS_ENUM(NSInteger,TLImageSpringDownloadOptions) {
     /**
      *  进入后台后，仍然在下载
      */
-    TLImageSpringDownloadContinueInBackground=1<<1
+    TLImageSpringDownloadContinueInBackground=1<<1,
+    
+    
+    TLImageSpringDownloadProgressiveDownload=1<<2,
+    
+    TLImageSpringDownloadHandleCookies=1<<3
 };
 
 /**
@@ -85,8 +90,9 @@ typedef void(^TLImageBlock)();
  *  @return 
  */
 -(void)downloadImgWithURL:(NSURL *)url
+          downloadOptions:(TLImageSpringDownloadOptions)options
                progress:(TLImageSpringProgroessBlock)processBlock
-             isFinished:(TLImageSpringDownloadFinishBlock)finishedBlock;
+               finished:(TLImageSpringDownloadFinishBlock)finishedBlock;
 
 /**
  *  挂起当前正在下载的线程

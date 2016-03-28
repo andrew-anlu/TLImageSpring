@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49B4108F1CA8C42D009D002F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B4108E1CA8C42D009D002F /* ImageIO.framework */; };
 		49C26BD01CA3DF690038FA26 /* libTLImageSpring.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		2151BB3C8397E6782467F44D /* libPods-TLImageSpring_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TLImageSpring_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CDF4BD503EB09883D99C99 /* Pods-TLImageSpring_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Example/Pods-TLImageSpring_Example.release.xcconfig"; sourceTree = "<group>"; };
+		49B4108E1CA8C42D009D002F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		49C26BCD1CA3DEAB0038FA26 /* TLImageSpring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TLImageSpring.framework; path = "Pods/../build/Debug-iphoneos/TLImageSpring.framework"; sourceTree = "<group>"; };
 		49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTLImageSpring.a; path = "Pods/../build/Debug-iphoneos/libTLImageSpring.a"; sourceTree = "<group>"; };
 		55E855ABE3AFEF92350C7EFC /* Pods-TLImageSpring_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Example/Pods-TLImageSpring_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49B4108F1CA8C42D009D002F /* ImageIO.framework in Frameworks */,
 				49C26BD01CA3DF690038FA26 /* libTLImageSpring.a in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
@@ -121,6 +124,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				49B4108E1CA8C42D009D002F /* ImageIO.framework */,
 				49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */,
 				49C26BCD1CA3DEAB0038FA26 /* TLImageSpring.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
