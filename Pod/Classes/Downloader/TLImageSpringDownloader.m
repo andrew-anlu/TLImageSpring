@@ -114,6 +114,8 @@
         
     }];
 
+             
+              NSLog(@"weakSelf.downloadQueue数量:%lu",(unsigned long)[weakSelf.downloadQueue operationCount]);
 }
 
 /**

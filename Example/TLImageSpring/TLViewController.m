@@ -49,8 +49,10 @@
     [downloader downloadImgWithURL:url downloadOptions:TLImageSpringDownloadLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } finished:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-        if(finished){
-            _bgImgView.image=image;
+        if(error){
+            NSLog(@"出错了:%@",error.description);
+        }else{
+          _bgImgView.image=image;
         }
     }];
 }

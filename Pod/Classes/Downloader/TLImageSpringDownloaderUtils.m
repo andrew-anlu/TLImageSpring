@@ -14,7 +14,7 @@
 
 NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
 
-@interface TLImageSpringDownloaderUtils()<NSURLSessionDataDelegate>{
+@interface TLImageSpringDownloaderUtils()<NSURLConnectionDataDelegate>{
     size_t widht,height;
     
     UIImageOrientation imageOrientation;
@@ -26,7 +26,7 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
 
 @property (nonatomic,getter=isFinished)  BOOL finished;
 @property (nonatomic,getter=isExecuting) BOOL executing;
-@property (nonatomic,strong)NSURLSession *urlSession;
+@property (strong, nonatomic) NSURLConnection *connection;
 
 @property (nonatomic,strong)NSMutableData *mutableImageData;
 @property  UIBackgroundTaskIdentifier backgroundTaskId;
@@ -83,21 +83,19 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
             }];
         }
         
-        self.executing=YES;
-        
-        //创建NSUrlSession
-        NSURLSessionConfiguration *defaultConfigure=[NSURLSessionConfiguration defaultSessionConfiguration];
-        _urlSession=[NSURLSession sessionWithConfiguration:defaultConfigure delegate:self delegateQueue:nil];
-        NSURLSessionDataTask *dataTask=[_urlSession dataTaskWithRequest:_request];
-        //启动
-        [dataTask resume];
-        
-        NSLog(@"进入到%s，时间是:%@,当前线程是:%@",__FUNCTION__,
-              [TLDateUtils getCurrentDate],[NSThread currentThread]);
-        
-        if(_urlSession){
-          
+        self.executing = YES;
+        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];
+    }
+        //执行进行连接
+        [self.connection start];
+    
+        if(_connection){
+            //循环调用
             CFRunLoopRun();
+            if(!self.finishBlock){
+                [self.connection cancel];
+                [self connection:self.connection didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:@{NSURLErrorFailingURLErrorKey : self.request.URL}]];
+            }
           
         }else{
             if(self.finishBlock){
@@ -105,7 +103,6 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
                 self.finishBlock(nil,nil,error,YES);
             }
         }
-    }
 
     //进入到后台后继续下载
     Class UIApplicationClass=NSClassFromString(@"UIApplication");
@@ -152,7 +149,7 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
         self.tlImageBlock();
     }
     
-    if(_urlSession){
+    if(_connection){
         if(self.isExecuting){
             self.executing=NO;
         }
@@ -160,12 +157,8 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
             self.finished=YES;
         }
     }
-    
     [self resetOperation];
-    
 }
-
-
 
 -(BOOL)isContinueDownloadWhenEnterBackground{
     return self.downloadOptions & TLImageSpringDownloadContinueInBackground;
@@ -177,8 +170,7 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
     self.finishBlock=nil;
     self.progroessBlock=nil;
     self.mutableImageData=nil;
-    
-    
+
 }
 
 + (UIImageOrientation)orientationFromPropertyValue:(NSInteger)value {
@@ -231,11 +223,9 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
 #pragma mark NSURlSession delegate
 
 // 1.接收到服务器的响应
-- (void)URLSession:(NSURLSession *)session
-          dataTask:(NSURLSessionDataTask *)dataTask
-didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
+- (void)connection:(NSURLConnection *)connection
+didReceiveResponse:(NSURLResponse *)response {
     //允许处理服务器的响应，才会继续接收服务器返回的数据
-    completionHandler(NSURLSessionResponseBecomeDownload);
     
     NSInteger statusCode=[((NSHTTPURLResponse*)response) statusCode];
     
@@ -254,7 +244,7 @@ didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSe
         if(statusCode==304){
             [self cancelUrlSession];
         }else{
-            [self.urlSession invalidateAndCancel];
+            [self.connection cancel];
         }
         if(self.finishBlock){
             NSError *error=[NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:nil];
@@ -269,7 +259,8 @@ didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSe
 
 
 // 2.接收到服务器的数据（可能调用多次）
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+ {
     [self.mutableImageData appendData:data];
     // 处理每次接收的数据
     if((self.downloadOptions & TLImageSpringDownloadProgressiveDownload)&&self.expectedSize>0 && self.finishBlock){
@@ -345,29 +336,19 @@ didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSe
     if(self.progroessBlock){
         self.progroessBlock(self.mutableImageData.length,self.expectedSize);;
     }
-}
+  }
 
-// 3.请求成功或者失败（如果失败，error有值）
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    // 请求完成,成功或者失败的处理
+}
+// 3.请求成功
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // 请求完成,成功或者失败的处
     NSLog(@"最终处理");
     NSLog(@"进入到%s，时间是:%@,当前线程是:%@",__FUNCTION__,
           [TLDateUtils getCurrentDate],[NSThread currentThread]);
-    
     //加上同步锁
-    //@synchronized(self) {
-        //如果下载出错了
-        if(error){
-            if(self.finishBlock){
-                self.finishBlock(nil,nil,error,YES);
-            }
-            self.finishBlock=nil;
-            [self forceDone];
-        }else{
-            NSLog(@"成功下载到了图片");
-            [self finishDownloadHandler];
-        }
-    //}
+    @synchronized(self) {
+      [self finishDownloadHandler];
+    }
 }
 
 /**
@@ -398,19 +379,20 @@ didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSe
     [self forceDone];
 }
 
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+     @synchronized(self) {
+        CFRunLoopStop(CFRunLoopGetCurrent());
+        self.connection = nil;
+    }
+    
+    if(self.finishBlock){
+        self.finishBlock(nil,nil,error,YES);
+    }
+    
+    self.finishBlock=nil;
+    [self forceDone];
+}
 
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
 

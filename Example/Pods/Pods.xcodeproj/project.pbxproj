@@ -50,6 +50,8 @@
 		447B5BE0E0991452792A78ED3A063E29 /* SpectaDSL.h in Headers */ = {isa = PBXBuildFile; fileRef = 227E6DD63D1EA549C981F92D8238B9E1 /* SpectaDSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46F312CBB94BAE62B58D3D7AE28E8DBD /* EXPMatchers+contain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2EECC17633DCCDFE0C80350BFD5C2B /* EXPMatchers+contain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		487899F028C39C1A518547A1AB2F625A /* EXPDoubleTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E38C238A7EBA4934AF2DF744617758 /* EXPDoubleTuple.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		490B67671CAA8BAA00462261 /* TLImageCatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 490B67651CAA8BAA00462261 /* TLImageCatch.h */; };
+		490B67681CAA8BAA00462261 /* TLImageCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 490B67661CAA8BAA00462261 /* TLImageCatch.m */; };
 		49B410971CA92615009D002F /* SDWebImageCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = 49B410951CA92615009D002F /* SDWebImageCompat.h */; };
 		49B410981CA92615009D002F /* SDWebImageCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = 49B410951CA92615009D002F /* SDWebImageCompat.h */; };
 		49B410991CA92615009D002F /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B410961CA92615009D002F /* SDWebImageCompat.m */; };
@@ -267,6 +269,8 @@
 		448661BADC1202B097F99FD2A0E3F926 /* EXPMatchers+beGreaterThanOrEqualTo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beGreaterThanOrEqualTo.m"; path = "Expecta/Matchers/EXPMatchers+beGreaterThanOrEqualTo.m"; sourceTree = "<group>"; };
 		45AA5AC9CEB6452C385BBC663F3DB80B /* NSValue+Expecta.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValue+Expecta.m"; path = "Expecta/NSValue+Expecta.m"; sourceTree = "<group>"; };
 		490603D60FE01F676F19FC4A52B86FC1 /* EXPMatchers+beNil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+beNil.m"; path = "Expecta/Matchers/EXPMatchers+beNil.m"; sourceTree = "<group>"; };
+		490B67651CAA8BAA00462261 /* TLImageCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLImageCatch.h; sourceTree = "<group>"; };
+		490B67661CAA8BAA00462261 /* TLImageCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLImageCatch.m; sourceTree = "<group>"; };
 		492095B297FA98B4611872955A3C4F9B /* SPTCallSite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SPTCallSite.h; path = Specta/Specta/SPTCallSite.h; sourceTree = "<group>"; };
 		49B410951CA92615009D002F /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
 		49B410961CA92615009D002F /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
@@ -657,6 +661,15 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		490B67641CAA8B9600462261 /* Catch */ = {
+			isa = PBXGroup;
+			children = (
+				490B67651CAA8BAA00462261 /* TLImageCatch.h */,
+				490B67661CAA8BAA00462261 /* TLImageCatch.m */,
+			);
+			path = Catch;
+			sourceTree = "<group>";
+		};
 		4DB25A32406820FD0D02B6CDA26FF68F /* TLImageSpring */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,6 +749,7 @@
 		AEEA8B339829EA58137416BE9EEE69AF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				490B67641CAA8B9600462261 /* Catch */,
 				B205456D7C222F03C5955BA799C461DC /* Downloader */,
 				88CC6A8AAD7081E16E0909E7CDD5A899 /* Manager */,
 				639886D3D20F73C269E753850675F0DC /* Utils */,
@@ -948,6 +962,7 @@
 				E867CBF850D20C314BF4BD790432455D /* EXPMatchers+respondTo.h in Headers */,
 				6924E116731D7079958063A3EE0781ED /* EXPMatchers.h in Headers */,
 				4231743B6C143BDB4A5FBB032E6D3799 /* EXPUnsupportedObject.h in Headers */,
+				490B67671CAA8BAA00462261 /* TLImageCatch.h in Headers */,
 				956FB3AB698AF3DA776A9F24AA79C229 /* NSObject+Expecta.h in Headers */,
 				60D3CCEB5B53542228790ABD8885AF42 /* NSValue+Expecta.h in Headers */,
 			);
@@ -1164,6 +1179,7 @@
 				A65C491577A425AF82C53F4A40A0A24B /* EXPMatchers+beIdenticalTo.m in Sources */,
 				2F9D3747596E4E074C3B776949091047 /* EXPMatchers+beInstanceOf.m in Sources */,
 				7436C602BB1CA7C91560C28DE749357B /* EXPMatchers+beInTheRangeOf.m in Sources */,
+				490B67681CAA8BAA00462261 /* TLImageCatch.m in Sources */,
 				63D0CD4F0FB5A6103E1DDB46E876CBB6 /* EXPMatchers+beKindOf.m in Sources */,
 				C6671739E8C5904113586F8BEBBC9780 /* EXPMatchers+beLessThan.m in Sources */,
 				43A1104CA0C628C2F693902EADA32B8C /* EXPMatchers+beLessThanOrEqualTo.m in Sources */,
