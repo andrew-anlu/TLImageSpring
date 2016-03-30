@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^TLImageCatchNoParamsBlock)();
+
 typedef NS_ENUM(NSInteger,TLImageCatchType){
     /**
      *  从服务器上下载
@@ -33,12 +35,30 @@ typedef NS_ENUM(NSInteger,TLImageCatchType){
 @property (nonatomic) NSUInteger maxMemeoryCost;
 
 @property (nonatomic) NSUInteger maxMemoryCountLimit;
+
+//在缓存中保存的时间周期，以秒为单位
+@property (nonatomic) NSInteger maxCatchAge;
+//在缓存中存贮的最大字节
+@property (nonatomic) NSInteger maxCatcheSize;
+
+
+
+
 /**
  *  单例方法
  *
- *  @return <#return value description#>
+ *  @return 单例
  */
 +(TLImageCatch*)sharedInstance;
+
+/**
+ *  初始化一个新的缓存目录
+ *
+ *  @param ns 目录
+ *
+ *  @return
+ */
+- (id)initWithNamespace:(NSString *)ns;
 
 /**
  *  根据key对图片进行存储
@@ -47,6 +67,21 @@ typedef NS_ENUM(NSInteger,TLImageCatchType){
  *  @param key   对应的key
  */
 -(void)storeImage:(UIImage *)image forkey:(NSString *)key;
+
+/**
+ *  存贮图片到硬盘上
+ *
+ *  @param image  图片资源
+ *  @param key    对应的key
+ *  @param toDisk 是否存储到硬盘上
+ */
+-(void)storeImage:(UIImage *)image forkey:(NSString *)key toDisk:(BOOL)toDisk;
+
+-(void)storeImage:(UIImage *)image
+recalculateFromImage:(BOOL)recalculate
+        imageDate:(NSData*)imageData
+           forkey:(NSString *)key
+           toDisk:(BOOL)toDisk;
 
 
 

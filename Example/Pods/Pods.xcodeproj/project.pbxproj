@@ -52,6 +52,8 @@
 		487899F028C39C1A518547A1AB2F625A /* EXPDoubleTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E38C238A7EBA4934AF2DF744617758 /* EXPDoubleTuple.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		490B67671CAA8BAA00462261 /* TLImageCatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 490B67651CAA8BAA00462261 /* TLImageCatch.h */; };
 		490B67681CAA8BAA00462261 /* TLImageCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 490B67661CAA8BAA00462261 /* TLImageCatch.m */; };
+		497713561CAB7C3900C5FF12 /* TLEncryptionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 497713541CAB7C3900C5FF12 /* TLEncryptionUtils.h */; };
+		497713571CAB7C3900C5FF12 /* TLEncryptionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 497713551CAB7C3900C5FF12 /* TLEncryptionUtils.m */; };
 		49B410971CA92615009D002F /* SDWebImageCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = 49B410951CA92615009D002F /* SDWebImageCompat.h */; };
 		49B410981CA92615009D002F /* SDWebImageCompat.h in Headers */ = {isa = PBXBuildFile; fileRef = 49B410951CA92615009D002F /* SDWebImageCompat.h */; };
 		49B410991CA92615009D002F /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B410961CA92615009D002F /* SDWebImageCompat.m */; };
@@ -272,6 +274,8 @@
 		490B67651CAA8BAA00462261 /* TLImageCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLImageCatch.h; sourceTree = "<group>"; };
 		490B67661CAA8BAA00462261 /* TLImageCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLImageCatch.m; sourceTree = "<group>"; };
 		492095B297FA98B4611872955A3C4F9B /* SPTCallSite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SPTCallSite.h; path = Specta/Specta/SPTCallSite.h; sourceTree = "<group>"; };
+		497713541CAB7C3900C5FF12 /* TLEncryptionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLEncryptionUtils.h; sourceTree = "<group>"; };
+		497713551CAB7C3900C5FF12 /* TLEncryptionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLEncryptionUtils.m; sourceTree = "<group>"; };
 		49B410951CA92615009D002F /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
 		49B410961CA92615009D002F /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
 		4ADA86446D8BE446E5B578EE56EEC718 /* Expecta+Snapshots-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Expecta+Snapshots-prefix.pch"; sourceTree = "<group>"; };
@@ -690,6 +694,8 @@
 				CDBCFB9A75EDB6097812F5738761BE1D /* TLDateUtils.h */,
 				E507E26E3EE90827331904049C202044 /* TLDateUtils.m */,
 				DB4E73E3202A398B28B20F59A4285C33 /* TLGlobalConfig.h */,
+				497713541CAB7C3900C5FF12 /* TLEncryptionUtils.h */,
+				497713551CAB7C3900C5FF12 /* TLEncryptionUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -957,6 +963,7 @@
 				237FB063FB365119546C7B5006224F3B /* EXPMatchers+haveCountOf.h in Headers */,
 				C98F5401E5C1AB6512BE50C3B7CEA9BF /* EXPMatchers+match.h in Headers */,
 				339A0C1BFF72397A705959E03877DDDB /* EXPMatchers+postNotification.h in Headers */,
+				497713561CAB7C3900C5FF12 /* TLEncryptionUtils.h in Headers */,
 				AAE75938ED3DD46BC00352B82D7CA890 /* EXPMatchers+raise.h in Headers */,
 				6EB2498C2AFB1DF8555CB7C1EF89CA5C /* EXPMatchers+raiseWithReason.h in Headers */,
 				E867CBF850D20C314BF4BD790432455D /* EXPMatchers+respondTo.h in Headers */,
@@ -1194,6 +1201,7 @@
 				562BE99A6F630E709218EB9B3CF36E90 /* EXPMatchers+haveCountOf.m in Sources */,
 				2239B5E63C5D2C1323D66F489F075C42 /* EXPMatchers+match.m in Sources */,
 				69EBB956302554EA37775F4D806BC4DD /* EXPMatchers+postNotification.m in Sources */,
+				497713571CAB7C3900C5FF12 /* TLEncryptionUtils.m in Sources */,
 				7FEE0E8D094D7BCCAC7129473EE05ADC /* EXPMatchers+raise.m in Sources */,
 				A26F992E8831118311F3DB7CB830595A /* EXPMatchers+raiseWithReason.m in Sources */,
 				E2EBD18BA89D3FF648947DF31FA12D44 /* EXPMatchers+respondTo.m in Sources */,
