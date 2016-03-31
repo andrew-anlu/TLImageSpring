@@ -10,6 +10,7 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import "TLEncryptionUtils.h"
+#import "SDWebImageCompat.h"
 
 @interface AutonsCatch : NSCache
 
@@ -77,18 +78,17 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
     });
     return instance;
 }
+
+-(id)init{
+    return [self initWithNamespace:@"tongli"];
+}
 -(id)initWithNamespace:(NSString *)ns{
     //获取缓存的路径
     NSString *path=[self makeDiskCatchPath:ns];
     return [self initWithNamespace:ns diskCatchDirectory:path];
 }
 
--(void)storeImage:(UIImage *)image forkey:(NSString *)key{
 
-}
--(void)storeImage:(UIImage *)image forkey:(NSString *)key toDisk:(BOOL)toDisk{
-
-}
 
 -(id)initWithNamespace:(NSString *)ns diskCatchDirectory:(NSString *)directory{
     self=[super init];
@@ -169,7 +169,7 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
  *  部分清空硬盘缓存
  */
 -(void)cleanDisk{
-
+    [self clearDiskOnCompletion:nil];
 }
 /**
  *  完全清空
@@ -302,12 +302,46 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
 }
 
 
+- (BOOL)diskImageExistsWithKey:(NSString *)key{
+    BOOL isExist=NO;
+    isExist=[[NSFileManager defaultManager] fileExistsAtPath:[self defaultCachePathForKey:key]];
+    
+    if(!isExist){
+        NSString *path=[self defaultCachePathForKey:key];
+        isExist=[[NSFileManager defaultManager] fileExistsAtPath:[[self defaultCachePathForKey:key] stringByDeletingPathExtension]];
+    }
+    
+    return  isExist;
+}
+
+-(void)diskImageExistsWithKey:(NSString *)key completion:(TLImageCompletionBlock)completionBlock{
+   dispatch_async(_fileQueue, ^{
+      BOOL isExist=[_fileManager fileExistsAtPath:[self defaultCachePathForKey:key]];
+      
+      if(!isExist){
+          isExist=[_fileManager fileExistsAtPath:[[self defaultCachePathForKey:key]  stringByDeletingPathExtension ]];
+      }
+      if(completionBlock){
+       dispatch_async(dispatch_get_main_queue(), ^{
+           completionBlock(isExist);
+       });
+      }
+      
+  });
+}
+
 
 #pragma mark private method
 -(NSString *)cachedFilenameForkey:(NSString *)key{
     return [TLEncryptionUtils md5:key];
 }
 
+-(void)storeImage:(UIImage *)image forkey:(NSString *)key{
+    [self storeImage:image recalculateFromImage:YES imageDate:nil forkey:key toDisk:YES];
+}
+-(void)storeImage:(UIImage *)image forkey:(NSString *)key toDisk:(BOOL)toDisk{
+    [self storeImage:image recalculateFromImage:YES imageDate:nil forkey:key toDisk:toDisk];
+}
 -(void)storeImage:(UIImage *)image
 recalculateFromImage:(BOOL)recalculate
         imageDate:(NSData*)imageData
@@ -359,6 +393,209 @@ recalculateFromImage:(BOOL)recalculate
 }
 
 
+#pragma mark
+#pragma mark Query from memory or Disk
+- (UIImage *)imageFromDiskCacheForKey:(NSString *)key{
+ //首先检查内存中是不是有数据
+    UIImage *image=[self imageFromDiskCacheForKey:key];
+    if(image){
+        return image;
+    }
+    
+    //其次检查硬盘缓存
+    UIImage *diskImage=[self diskImageForKey:key];
+    //如果从硬盘上找到图片资源，添加到内存中
+    if(diskImage && self.shouldCatchImagesInMemory){
+        NSUInteger cost=TLCacheCostForImage(diskImage);
+        [self.tlNSCatch setObject:diskImage forKey:key cost:cost];
+    }
+    
+    return diskImage;
+}
+
+
+-(UIImage *)imageFromMemoryCacheForKey:(NSString *)key{
+    return [self.tlNSCatch objectForKey:key];
+}
+
+- (UIImage *)diskImageForKey:(NSString *)key{
+    NSData *data=[self diskImageDataFromAllPathsForKey:key];
+    if(data){
+        UIImage *image=[UIImage imageWithData:data];
+        //对图片进行压缩
+        image=[self scaledImageForKey:key image:image];
+        return image;
+    }else{
+        return nil;
+    }
+}
+
+
+/**
+ * 查询硬盘中的缓存
+ *
+ *  @param key             key
+ *  @param completionBlock 回调函数
+ *
+ *  @return 一个线程
+ */
+-(NSOperation *)queryDiskCacheForKey:(NSString *)key
+                                done:(TLImageQueryCompleteBlock)doneBlock{
+    if(!doneBlock){
+        return nil;
+    }
+    if(!key){
+        doneBlock(nil,TLImageCatchTypeNormal);
+        return nil;
+    }
+    
+    //检查内存中的key
+    UIImage *image=[self imageFromMemoryCacheForKey:key];
+    if(image){
+        doneBlock(image,TLImageCatchTypeMemory);
+        return nil;
+    }
+    
+    NSOperation *operation=[[NSOperation alloc]init];
+    //异步调用主线程进行回调
+    dispatch_async(self.fileQueue, ^{
+        if(operation.isCancelled){
+            return ;
+        }
+        
+        //加入自动释放池,用完就会释放内存，比较高效
+        @autoreleasepool {
+            UIImage *diskImage=[self diskImageForKey:key];
+            if(diskImage && self.shouldCatchImagesInMemory){
+                NSUInteger cost=TLCacheCostForImage(diskImage);
+                [self.tlNSCatch setObject:diskImage forKey:key cost:cost];
+            }
+            
+            //异步调用主线程进行回调
+            dispatch_async(dispatch_get_main_queue(), ^{
+                doneBlock(diskImage,TLImageCatchTypeDISK);
+            });
+        }
+    });
+    
+    return operation;
+    
+}
+
+- (UIImage *)scaledImageForKey:(NSString *)key image:(UIImage *)image {
+    return SDScaledImageForKey(key, image);
+}
+/**
+ *  从沙盒的所有目录中检测是否存在该图片资源
+ *
+ *  @param key  图片资源对应的key
+ *
+ *  @return 图片的二进制文件
+ */
+-(NSData *)diskImageDataFromAllPathsForKey:(NSString *)key{
+    NSString *defaultpath=[self defaultCachePathForKey:key];
+    NSData *data=[NSData dataWithContentsOfFile:defaultpath];
+    if(data){
+        return data;
+    }
+    
+    //加入这个key没有对应的 "/"
+    data=[NSData dataWithContentsOfFile:[defaultpath stringByDeletingLastPathComponent]];
+    if(data){
+        return  data;
+    }
+    
+    return nil;
+}
+
+
+#pragma mark
+#pragma mark 删除单个key从内存或者硬盘中
+- (void)removeImageForKey:(NSString *)key{
+    [self removeImageForKey:key fromDisk:YES withCompletion:nil];
+}
+
+- (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk{
+    [self removeImageForKey:key fromDisk:fromDisk withCompletion:nil];
+}
+
+-(void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk
+       withCompletion:(TLImageCatchNoParamsBlock)completionBlock{
+    if(key==nil){
+        return;
+    }
+    if(self.shouldCatchImagesInMemory){
+        [self.tlNSCatch removeObjectForKey:key];
+    }
+    
+    if(fromDisk){
+      dispatch_async(dispatch_get_main_queue(), ^{
+          [_fileManager removeItemAtPath:[self defaultCachePathForKey:key] error:nil];
+          if(completionBlock){
+              completionBlock();
+          }
+      });
+    }else if(completionBlock){
+        completionBlock();
+    }
+    
+}
+
+/**
+ * 获取硬盘缓存的大小
+ */
+- (NSUInteger)getSize{
+    __block NSUInteger size=0;
+    dispatch_sync(self.fileQueue, ^{
+        NSDirectoryEnumerator *fileEnumerator=[_fileManager enumeratorAtPath:self.diskCatchPath];
+        for (NSString *fileName in fileEnumerator) {
+            NSString *filePath=[self.diskCatchPath stringByAppendingPathComponent:fileName];
+            NSDictionary *attrs=[[NSFileManager defaultManager] attributesOfFileSystemForPath:filePath error:nil];
+            
+            size+=[attrs fileSize];
+        }
+    });
+    
+    return size;
+}
+
+/**
+ * 获取硬盘上缓存的图片的数量
+ */
+- (NSUInteger)getDiskCount{
+    __block NSUInteger count=0;
+    dispatch_sync(self.fileQueue, ^{
+        NSDirectoryEnumerator *fileEnumerator=[_fileManager enumeratorAtPath:self.diskCatchPath];
+        count=fileEnumerator.allObjects.count;
+    });
+    
+    return count;
+}
+
+-(void)calculateSizeAndCountInDiskWIthCompletion:(TLImageSpringCalculateSizeBlock)completionBlock{
+    NSURL *diskCacheURL=[NSURL fileURLWithPath:self.diskCatchPath isDirectory:YES];
+    
+    dispatch_async(self.fileQueue, ^{
+        NSUInteger fileCount=0;
+        NSUInteger totalSize=0;
+        
+        NSDirectoryEnumerator *fileEnumerator=[_fileManager enumeratorAtURL:diskCacheURL includingPropertiesForKeys:@[NSFileSize] options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
+        
+        
+        for (NSURL *fileUrl in fileEnumerator) {
+            NSNumber *fileSize;
+            [fileUrl getResourceValue:&fileSize forKey:NSURLFileSizeKey error:nil];
+            totalSize+=[fileSize unsignedIntegerValue];
+            
+            fileCount++;
+        }
+        if(completionBlock){
+         dispatch_async(dispatch_get_main_queue(), ^{
+             completionBlock(fileCount,totalSize);
+         });
+        }
+    });
+}
 
 
 @end

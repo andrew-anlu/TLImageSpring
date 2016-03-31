@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491674661CACC5B40035EC99 /* TLTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 491674651CACC5B40035EC99 /* TLTableController.m */; };
+		4916746B1CACC70F0035EC99 /* TLCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4916746A1CACC70F0035EC99 /* TLCustomCell.m */; };
 		49B4108F1CA8C42D009D002F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B4108E1CA8C42D009D002F /* ImageIO.framework */; };
 		49C26BD01CA3DF690038FA26 /* libTLImageSpring.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -40,6 +42,11 @@
 /* Begin PBXFileReference section */
 		2151BB3C8397E6782467F44D /* libPods-TLImageSpring_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TLImageSpring_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CDF4BD503EB09883D99C99 /* Pods-TLImageSpring_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLImageSpring_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-TLImageSpring_Example/Pods-TLImageSpring_Example.release.xcconfig"; sourceTree = "<group>"; };
+		491674641CACC5B40035EC99 /* TLTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTableController.h; sourceTree = "<group>"; };
+		491674651CACC5B40035EC99 /* TLTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTableController.m; sourceTree = "<group>"; };
+		491674671CACC6560035EC99 /* GlobalConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalConfig.h; sourceTree = "<group>"; };
+		491674691CACC70F0035EC99 /* TLCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCustomCell.h; sourceTree = "<group>"; };
+		4916746A1CACC70F0035EC99 /* TLCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLCustomCell.m; sourceTree = "<group>"; };
 		49B4108E1CA8C42D009D002F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		49C26BCD1CA3DEAB0038FA26 /* TLImageSpring.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TLImageSpring.framework; path = "Pods/../build/Debug-iphoneos/TLImageSpring.framework"; sourceTree = "<group>"; };
 		49C26BCF1CA3DF690038FA26 /* libTLImageSpring.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTLImageSpring.a; path = "Pods/../build/Debug-iphoneos/libTLImageSpring.a"; sourceTree = "<group>"; };
@@ -100,6 +107,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		491674631CACC59E0035EC99 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				491674641CACC5B40035EC99 /* TLTableController.h */,
+				491674651CACC5B40035EC99 /* TLTableController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		491674681CACC6F10035EC99 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				491674691CACC70F0035EC99 /* TLCustomCell.h */,
+				4916746A1CACC70F0035EC99 /* TLCustomCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +165,8 @@
 		6003F593195388D20070C39A /* Example for TLImageSpring */ = {
 			isa = PBXGroup;
 			children = (
+				491674681CACC6F10035EC99 /* View */,
+				491674631CACC59E0035EC99 /* Controllers */,
 				6003F59C195388D20070C39A /* TLAppDelegate.h */,
 				6003F59D195388D20070C39A /* TLAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -147,6 +174,7 @@
 				6003F5A6195388D20070C39A /* TLViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				491674671CACC6560035EC99 /* GlobalConfig.h */,
 			);
 			name = "Example for TLImageSpring";
 			path = TLImageSpring;
@@ -403,8 +431,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4916746B1CACC70F0035EC99 /* TLCustomCell.m in Sources */,
 				6003F59E195388D20070C39A /* TLAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* TLViewController.m in Sources */,
+				491674661CACC5B40035EC99 /* TLTableController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
