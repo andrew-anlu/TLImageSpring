@@ -77,13 +77,11 @@
 
 -(void)test{
     
-    NSString *urlString=nil;
-    //NSString *urlString=@"http://www.weather.com.cn/data/cityinfo/101010100.html";
-    urlString=IMGURL;
+    
+    NSString *urlString=@"http://www.weather.com.cn/data/cityinfo/101010100.html";
     NSURL *url=[NSURL URLWithString:urlString];
-    
-    
-    [_bgImgView1 TL_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"map"]];
+    [_bgImgView1 TL_setImageWithURL:url
+                   placeholderImage:[UIImage imageNamed:@"map"]];
     
 }
 
