@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TLImageSpringDownloader.h"
+#import "TLImageSpringOpeProtocol.h"
 
-@interface TLImageSpringDownloaderUtils : NSOperation
+@interface TLImageSpringDownloaderUtils : NSOperation<TLImageSpringOpeProtocol>
 
 /**
  *  网络请求

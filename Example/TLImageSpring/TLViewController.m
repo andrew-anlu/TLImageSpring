@@ -10,6 +10,12 @@
 #import <TLImageSpring/TLImageSpringDownloader.h>
 #import <TLImageSpring/TLImageSpringManager.h>
 #import "TLTableController.h"
+#import <TLImageSpring/UIImageView+TLSpring.h>
+#import "GlobalConfig.h"
+#import <TLImageSpring/TLImageCatch.h>
+
+
+#define IMGURL @"http://7xkxhx.com1.z0.glb.clouddn.com/IMG_5686.jpg"
 
 @interface TLViewController ()
 @property (nonatomic,strong) UIImageView *bgImgView1;
@@ -27,7 +33,7 @@
     self.view.backgroundColor=[UIColor whiteColor];
     
     
-    _bgImgView1=[[UIImageView alloc]initWithFrame:CGRectMake(100, 10+NAVHeight, 100, 200)];
+    _bgImgView1=[[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-150, 10+NAVHeight, 150, 200)];
     _bgImgView1.backgroundColor=[UIColor yellowColor];
     [self.view addSubview:_bgImgView1];
     
@@ -37,11 +43,22 @@
     UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(10, 10+NAVHeight, 100, 40)];
     [btn setTitle:@"开始下载图片" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(managerTest) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     
+    
+    CGRect rect=CGRectMake(btn.frame.origin.x, CGRectGetMaxY(btn.frame)+10, btn.frame.size.width, 40);
+    UIButton *cancelBtn=[self createBtn:rect title:@"取消下载"];
+    [cancelBtn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cancelBtn];
+    
+    rect=CGRectMake(btn.frame.origin.x, CGRectGetMaxY(cancelBtn.frame)+10, btn.frame.size.width, 40);
+    UIButton *clearBtn=[self createBtn:rect title:@"清空图片"];
+    [clearBtn addTarget:self action:@selector(clearAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:clearBtn];
+    
 
-    CGRect rect=CGRectMake(btn.frame.origin.x, CGRectGetMaxY(_bgImgView1.frame)+10, 100, 40) ;
+    rect=CGRectMake(btn.frame.origin.x, CGRectGetMaxY(_bgImgView1.frame)+10, 100, 40) ;
     
     UIButton *tableViewBtn=[self createBtn:rect title:@"表格显示图片"];
     [self.view addSubview:tableViewBtn];
@@ -62,21 +79,12 @@
     
     NSString *urlString=nil;
     //NSString *urlString=@"http://www.weather.com.cn/data/cityinfo/101010100.html";
-    urlString=@"http://7xkxhx.com1.z0.glb.clouddn.com/QQ20151022-3.png";
+    urlString=IMGURL;
     NSURL *url=[NSURL URLWithString:urlString];
     
     
-    TLImageSpringDownloader *downloader=[TLImageSpringDownloader sharedInstance];
+    [_bgImgView1 TL_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"map"]];
     
-    [downloader downloadImgWithURL:url downloadOptions:TLImageSpringDownloadLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        
-    } finished:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-        if(error){
-            NSLog(@"出错了:%@",error.description);
-        }else{
-          _bgImgView1.image=image;
-        }
-    }];
 }
 
 -(void)managerTest{
@@ -105,6 +113,19 @@
     [self.navigationController pushViewController:tableVc animated:YES];
 }
 
+-(void)cancelAction:(UIButton *)btn{
+    NSLog(@"%s",__FUNCTION__);
+    [_bgImgView1 TL_cancelCurrentImageDownload];
+}
+
+
+-(void)clearAction:(UIButton *)btn{
+    TLImageCatch *cache=[TLImageCatch sharedInstance];
+    
+    [cache removeImageForKey:IMGURL];
+    
+    _bgImgView1.image=nil;
+}
 
 
 

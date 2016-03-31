@@ -76,7 +76,7 @@
     return self.HttpHeaders[field];
 }
 
--(void)downloadImgWithURL:(NSURL *)url
+-(id<TLImageSpringOpeProtocol>)downloadImgWithURL:(NSURL *)url
           downloadOptions:(TLImageSpringDownloadOptions)options
                  progress:(TLImageSpringProgroessBlock)processBlock
                 finished:(TLImageSpringDownloadFinishBlock)finishedBlock
@@ -85,6 +85,7 @@
     __weak typeof (self)weakSelf=self;
     
     __block TLImageSpringDownloaderUtils *operation;
+              
     
     [self checkQueueForUrl:url processBlock:processBlock finishedBlock:finishedBlock callBackBlock:^{
         NSTimeInterval timeInterval=weakSelf.downloadTimerOut;
@@ -113,9 +114,9 @@
         [weakSelf.downloadQueue addOperation:operation];
         
     }];
-
              
-              NSLog(@"weakSelf.downloadQueue数量:%lu",(unsigned long)[weakSelf.downloadQueue operationCount]);
+    NSLog(@"weakSelf.downloadQueue数量:%lu",(unsigned long)[weakSelf.downloadQueue operationCount]);
+              return operation;
 }
 
 /**
@@ -139,7 +140,6 @@
     }
     
     dispatch_barrier_sync(self.responseQueue, ^{
-        
         callback();
     });
 

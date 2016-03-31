@@ -10,6 +10,8 @@
 #import "GlobalConfig.h"
 #import "TLCustomCell.h"
 
+#import <TLImageSpring/TLImageSpringManager.h>
+
 
 @interface TLTableController()<UITableViewDataSource,UITableViewDelegate>
 
@@ -23,6 +25,7 @@
     self.view.backgroundColor=[UIColor whiteColor];
     [self initData];
     [self initTabelView];
+    [self initView];
 }
 
 -(void)initData{
@@ -46,8 +49,12 @@
                    @"url":@"http://7xkxhx.com1.z0.glb.clouddn.com/QQ20160303-0.png"},
                  @{@"name":@"张三",
                    @"url":@"http://7xkxhx.com1.z0.glb.clouddn.com/closureReferenceCycle01_2x.png"},
+                 @{@"name":@"张三",
+                   @"url":@"http://7xkxhx.com1.z0.glb.clouddn.com/IMG_5853.jpg"}
                  ];
 }
+
+//http://7xkxhx.com1.z0.glb.clouddn.com/IMG_5853.jpg
 
 -(void)initTabelView{
 
@@ -55,6 +62,23 @@
     _tableview.delegate=self;
     _tableview.dataSource=self;
     [self.view addSubview:_tableview];
+}
+
+-(void)cancelAllAction:(UIButton *)btn{
+    TLImageSpringManager *manager=[TLImageSpringManager sharedInstance];
+    [manager cancelAll];
+    
+    NSLog(@"取消下载了");
+}
+
+-(void)initView{
+    
+    UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-100, 10, 80, 40)];
+    [btn setTitle:@"取消下载" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.navigationController.navigationBar addSubview:btn];
+    
+    [btn addTarget:self action:@selector(cancelAllAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -75,6 +99,11 @@
     
     if(_arrayData && _arrayData.count>0){
         NSDictionary *dict=_arrayData[indexPath.row];
+        
+        NSString *name=dict[@"name"];
+        name=[name stringByAppendingFormat:@"%ld",(long)indexPath.row];
+        cell.namelb.text=name;
+        
         [cell setDataSource:dict];
     }
     return cell;

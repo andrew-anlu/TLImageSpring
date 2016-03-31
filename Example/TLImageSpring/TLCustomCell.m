@@ -31,8 +31,7 @@
 -(void)setDataSource:(NSDictionary *)dict{
     NSString *url=[dict[@"url"] description];
     
-    NSString *name=[dict[@"name"] description];
-    _namelb.text=name;
+ 
     TLImageSpringManager *manager=[TLImageSpringManager sharedInstance];
     
     [manager downloadImageWithURL:[NSURL URLWithString:url] options:TLImageSpringLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {

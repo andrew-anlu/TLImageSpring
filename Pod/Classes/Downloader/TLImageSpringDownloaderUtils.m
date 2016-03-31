@@ -143,7 +143,7 @@ NSString *const TLImageErrorDomain = @"TLImageErrorDomain";
 -(void)cancelUrlSession{
   if(self.isFinished)
       return;
-    
+    //强制NSOperation取消操作
     [super cancel];
     if(self.tlImageBlock){
         self.tlImageBlock();
@@ -391,6 +391,14 @@ didReceiveResponse:(NSURLResponse *)response {
     
     self.finishBlock=nil;
     [self forceDone];
+}
+
+#pragma mark 
+#pragma mark TLImageSpringOpeProtocol
+-(void)cancelOperation{
+    @synchronized(self) {
+        [self cancelUrlSessionAndStop];
+    }
 }
 
 

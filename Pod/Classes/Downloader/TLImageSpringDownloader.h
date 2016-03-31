@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TLImageSpringOpeProtocol.h"
 
 
 typedef NS_ENUM(NSInteger,TLImageSpringDownloaderExcutionOrder){
@@ -89,7 +90,7 @@ typedef void(^TLImageBlock)();
  *
  *  @return 
  */
--(void)downloadImgWithURL:(NSURL *)url
+-(id<TLImageSpringOpeProtocol>)downloadImgWithURL:(NSURL *)url
           downloadOptions:(TLImageSpringDownloadOptions)options
                progress:(TLImageSpringProgroessBlock)processBlock
                finished:(TLImageSpringDownloadFinishBlock)finishedBlock;

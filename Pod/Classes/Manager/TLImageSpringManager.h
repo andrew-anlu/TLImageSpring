@@ -11,6 +11,8 @@
 #import "TLImageSpringDownloader.h"
 #import "TLImageSpringDownloaderUtils.h"
 
+
+
 typedef NS_ENUM(NSInteger,TLImageSpringOptions){
     /**
      *  默认值，当一个NSurl下载失败的时候，这个URL会被加入黑名单，不会被记载，
@@ -51,7 +53,12 @@ typedef NS_ENUM(NSInteger,TLImageSpringOptions){
      *  如果图片资源很大，下载时间会很长，这个属性支持先用一个占位符图片进行填充，
         当图片下载完后进行替换
      */
-    TLImageSpringPlaceholdImage=1<<7
+    TLImageSpringPlaceholdImage=1<<7,
+    
+    /**
+     *  延长占位符图片显示的时间
+     */
+    TLImageSpringDelayPlaceholder=1<<8
     
 };
 
@@ -75,7 +82,7 @@ typedef void(^TLImageSpringWithFinishedBlock)(UIImage *image,NSError *error,TLIm
  *  @param progressBlock 进度条函数
  *  @param finishedBlock 下载完成的回调函数
  */
--(void)downloadImageWithURL:(NSURL *)url
+-(id<TLImageSpringOpeProtocol>)downloadImageWithURL:(NSURL *)url
                     options:(TLImageSpringOptions)options
                    progress:(TLImageSpringProgroessBlock)progressBlock
                   completed:(TLImageSpringWithFinishedBlock)finishedBlock;

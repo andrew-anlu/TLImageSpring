@@ -9,6 +9,9 @@
 #ifndef TLGlobalConfig_h
 #define TLGlobalConfig_h
 
+
+typedef void(^TLImageNoParamsBlock)();
+
 //在主线程同步调用
 #define dispatch_sync_mainThread(block)\
     if([NSThread isMainThread]){\

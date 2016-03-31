@@ -8,9 +8,14 @@
 
 #import "TLImageSpringManager.h"
 #import "TLGlobalConfig.h"
+#import "TLImageSpringComposeOper.h"
+
+
+
+
+
 @interface TLImageSpringManager()
 @property (nonatomic,strong)NSMutableSet *failedUrls;
-
 
 @end
 
@@ -47,12 +52,15 @@
  *  @param progressBlock 进度条函数
  *  @param finishedBlock 下载完成的回调函数
  */
--(void)downloadImageWithURL:(NSURL *)url
+-(id<TLImageSpringOpeProtocol>)downloadImageWithURL:(NSURL *)url
                     options:(TLImageSpringOptions)options
                    progress:(TLImageSpringProgroessBlock)progressBlock
                   completed:(TLImageSpringWithFinishedBlock)finishedBlock{
-
+    
     NSAssert(finishedBlock!=nil, @"finishedBlock不能为空");
+    
+    __block TLImageSpringComposeOper *composeOperation=[TLImageSpringComposeOper new];
+     __weak  TLImageSpringComposeOper *weakcomposeOperation = composeOperation;
     if([url isKindOfClass:NSString.class]){
         url=[NSURL URLWithString:(NSString *)url];
     }
@@ -67,12 +75,24 @@
             NSError *error=[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil];
             finishedBlock(nil,error,TLImageCatchTypeNormal,YES,nil);
         });
-        return;
+        return composeOperation;
+    }
+    
+    @synchronized(self.runningOperations) {
+        if(composeOperation){
+            [self.runningOperations addObject:composeOperation];
+        }
     }
     
     NSString *key=[self getStringByURL:url];
-    NSOperation *operation=[self.tlImageCache queryDiskCacheForKey:key done:^(UIImage *image, TLImageCatchType cacheType) {
+    composeOperation.cacheOperation=[self.tlImageCache queryDiskCacheForKey:key done:^(UIImage *image, TLImageCatchType cacheType) {
         
+        if(composeOperation.isCanceled){
+            @synchronized(self.runningOperations) {
+                [self.runningOperations removeObject:composeOperation];
+            }
+            return;
+        }
         
         //如果没有从内存中找到图片
         if(!image || options & TLImageSpringRefreshCached){
@@ -84,9 +104,7 @@
             });
             return;
         }
-        
-        
-        [self.tlImageSpringDownloader downloadImgWithURL:url downloadOptions:TLImageSpringDownloadLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+       id<TLImageSpringOpeProtocol> subOperation=[self.tlImageSpringDownloader downloadImgWithURL:url downloadOptions:TLImageSpringDownloadLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } finished:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
             if(error){
@@ -123,7 +141,24 @@
                 });
             }
         }];
+        
+        
+        composeOperation.cancelBlock=^{
+            [subOperation cancelOperation];
+            @synchronized(self.runningOperations) {
+                //强弱operation转换
+                __strong __typeof(weakcomposeOperation) strongOperation = weakcomposeOperation;
+                if(strongOperation){
+                    [self.runningOperations removeObject:strongOperation];
+                }
+            }
+        };
+        
     }];
+    
+    NSLog(@"Manager中NSOperation的数量:%lu",(unsigned long)self.runningOperations.count);
+    return composeOperation;
+    
     
 }
 /**
@@ -222,10 +257,17 @@
 {
     @synchronized(self.runningOperations) {
         NSArray *operations=[self.runningOperations copy];
-        [operations makeObjectsPerformSelector:@selector(cancel)];
+        //[operations makeObjectsPerformSelector:@selector(cancel)];
+        
+        for (id<TLImageSpringOpeProtocol> operation in operations) {
+            [operation cancelOperation];
+        }
+        
         [self.runningOperations removeObjectsInArray:operations];
     }
 }
+
+
 
 -(BOOL)isRuning{
     BOOL isRuning=NO;
