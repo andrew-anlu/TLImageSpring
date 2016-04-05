@@ -43,6 +43,7 @@
     [btn setTitle:@"开始下载图片" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
+    btn.titleLabel.font=[UIFont systemFontOfSize:13];
     [self.view addSubview:btn];
     
     
@@ -71,13 +72,13 @@
     UIButton *btn=[[UIButton alloc]initWithFrame:rect];
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    btn.titleLabel.font=[UIFont systemFontOfSize:13];
     return btn;
 }
 
 -(void)test{
     
-    
-    NSString *urlString=@"http://www.weather.com.cn/data/cityinfo/101010100.html";
+    NSString *urlString=@"http://7xkxhx.com1.z0.glb.clouddn.com/QQ20151022-3.png";
     NSURL *url=[NSURL URLWithString:urlString];
     [_bgImgView1 TL_setImageWithURL:url
                    placeholderImage:[UIImage imageNamed:@"map"]];

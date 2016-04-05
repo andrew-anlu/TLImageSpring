@@ -45,14 +45,7 @@
     
     [_iconIv setImageWithURL:[NSURL URLWithString:url] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
-    [_iconIv TL_setImageWithURL:url
-               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-                completionBlock:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
-                    //....完成回调的代码
-                }];
-    
-    [_iconIv setImageWithURL:url
- usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
     
 }
 

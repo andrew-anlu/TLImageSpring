@@ -12,6 +12,18 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+##Demo pictures
+![1](http://7xsn4e.com2.z0.glb.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%885%E6%97%A5%20%E4%B8%8B%E5%8D%885.20.27.png)
+
+![2](http://7xsn4e.com2.z0.glb.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%885%E6%97%A5%20%E4%B8%8B%E5%8D%885.20.38.png)
+
+![3](http://7xsn4e.com2.z0.glb.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%885%E6%97%A5%20%E4%B8%8B%E5%8D%885.20.55.png)
+
+![4](http://7xsn4e.com2.z0.glb.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%885%E6%97%A5%20%E4%B8%8B%E5%8D%885.20.58.png)
+
+![5](http://7xsn4e.com2.z0.glb.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%885%E6%97%A5%20%E4%B8%8B%E5%8D%885.21.04.png)
+
+
 ## advantage
 这是一个简单易用的图片下载框架，它采用多线程来下载图片，异步加载不影响主线程，使得过程相当流畅。
 
