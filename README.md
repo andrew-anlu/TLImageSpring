@@ -31,15 +31,76 @@ pod "TLImageSpring"
 
 ## How to use
 
+我提供了两种扩展文件来支持异步加载图片
+
+1. UIImageView+TLSpring.h 支持在UIImageview中设置图片服务器地址
+2. UIImageView+UIActivityIndicatorForTLImageSpring.h 不仅支持设置图片的路径，而且支持加载一个菊花的转子
+
 导入 `#import <TLImageSpring/UIImageView+TLSpring.h>`
+或者 `#import <TLImageSpring/UIImageView+UIActivityIndicatorForTLImageSpring.h>`
 
 一般都是通过UIimageView来加载图片的，我提供了方便的API去调用
 
+
+###普通控件上调用
 ```
  NSString *urlString=@"http://www.weather.com.cn/data/cityinfo/101010100.html";
  NSURL *url=[NSURL URLWithString:urlString];
  [_bgImgView1 TL_setImageWithURL:url
                 placeholderImage:[UIImage imageNamed:@"map"]];
+   
+  //调用带有转子提示的API             
+ //[_bgImgView1 setImageWithURL:url usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+```
+
+带有转子的API:
+
+```
+[_iconIv setImageWithURL:url
+ usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+```
+
+###支持block回调
+
+```
+ [_iconIv TL_setImageWithURL:url
+               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                completionBlock:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+                    //....完成回调的代码
+                }];
+```
+
+带有转子的API
+
+```
+[_iconIv setImageWithURL:url
+            placeholderImage:[UIImage imageNamed:@"placeholder.png"] completed:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+        
+    } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+```
+
+
+###异步下载支持下载的进度条提示
+
+```
+    [_iconIv TL_setImageWithURL:url
+     placeholderImage:UIImage imageNamed:@"placeholder.png"] progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+     //进度条提示可以在这里完成
+        
+    } completionBlock:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+        //下载成功或者失败的处理代码
+    }];
+```
+
+使用带有转子的API
+
+```
+[_iconIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                     options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                         
+                     } completed:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+                         
+                     } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 ```
 
 ## APIS

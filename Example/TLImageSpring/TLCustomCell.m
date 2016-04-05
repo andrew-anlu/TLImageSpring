@@ -9,6 +9,7 @@
 #import "TLCustomCell.h"
 #import "GlobalConfig.h"
 #import <TLImageSpring/TLImageSpringManager.h>
+#import <TLImageSpring/UIImageView+UIActivityIndicatorForTLImageSpring.h>
 
 @implementation TLCustomCell
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -32,15 +33,26 @@
     NSString *url=[dict[@"url"] description];
     
  
-    TLImageSpringManager *manager=[TLImageSpringManager sharedInstance];
+//    TLImageSpringManager *manager=[TLImageSpringManager sharedInstance];
+//    
+//    [manager downloadImageWithURL:[NSURL URLWithString:url] options:TLImageSpringLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//        
+//    } completed:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+//        if(image && !error){
+//            _iconIv.image=image;
+//        }
+//    }];
     
-    [manager downloadImageWithURL:[NSURL URLWithString:url] options:TLImageSpringLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        
-    } completed:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
-        if(image && !error){
-            _iconIv.image=image;
-        }
-    }];
+    [_iconIv setImageWithURL:[NSURL URLWithString:url] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    [_iconIv TL_setImageWithURL:url
+               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                completionBlock:^(UIImage *image, NSError *error, TLImageCatchType cacheType, BOOL finished, NSURL *imageUrl) {
+                    //....完成回调的代码
+                }];
+    
+    [_iconIv setImageWithURL:url
+ usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
 }
 

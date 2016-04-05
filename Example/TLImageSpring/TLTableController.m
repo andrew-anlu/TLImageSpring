@@ -11,6 +11,7 @@
 #import "TLCustomCell.h"
 
 #import <TLImageSpring/TLImageSpringManager.h>
+#import <TLImageSpring/UIImageView+UIActivityIndicatorForTLImageSpring.h>
 
 
 @interface TLTableController()<UITableViewDataSource,UITableViewDelegate>
@@ -54,7 +55,7 @@
                  ];
 }
 
-//http://7xkxhx.com1.z0.glb.clouddn.com/IMG_5853.jpg
+
 
 -(void)initTabelView{
 

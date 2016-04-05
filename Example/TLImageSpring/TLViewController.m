@@ -39,7 +39,6 @@
     
     
     
-    
     UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(10, 10+NAVHeight, 100, 40)];
     [btn setTitle:@"开始下载图片" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
